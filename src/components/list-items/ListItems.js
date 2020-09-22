@@ -1,6 +1,8 @@
 import React from 'react';
 import './list-items.css';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import FlipMove from 'react-flip-move';
 
 function ListItems(props) {
@@ -14,7 +16,7 @@ function ListItems(props) {
                     <span>
                         <FontAwesomeIcon className="faicons" onClick={() => {
                             props.deleteItem(item.key)
-                        }} icon="trash" />
+                        }} icon={faTrash} />
                     </span>
                 </p>
             </div>

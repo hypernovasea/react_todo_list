@@ -1,18 +1,27 @@
 {
   "name": "todo-list",
   "version": "0.1.0",
+  "description": "a simple todo list using a PERN stack",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
+    "pg": "^8.3.3",
+    "pg-hstore": "^2.3.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
     "react-flip-move": "^3.0.4",
-    "@fortawesome/fontawesome-svg-core": "^1.2.30",
-    "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "@fortawesome/react-fontawesome": "^0.1.11"
+    "react-scripts": "3.4.3",
+    "save": "^2.4.0",
+    "sequelize": "^6.3.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,6 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:5000/",
   "eslintConfig": {
     "extends": "react-app"
   },

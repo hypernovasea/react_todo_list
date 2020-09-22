@@ -12,3 +12,7 @@
     position: relative;
     transition: ease-in-out;
 }
+
+.list p span {
+    padding-left: 30px;
+}
