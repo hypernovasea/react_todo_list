@@ -30,8 +30,13 @@ app.use(morgan('combined'))
 
 // App routes
 app.get('/', (req, res) => {
-    res.send({ message: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+    res.send({ message: 'stuff is up and running i guess' });
 });
+
+app.get('/express_backend', (req, res) => {
+    res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+  });
+
 let routes = require('./routes/routes_init');
 routes.init(app);
 
