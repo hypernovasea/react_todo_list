@@ -24,7 +24,7 @@ const todoController = {
         knex.select('*').from('todo')
             .then(items => {
                 if(items.length){
-                    res.json(items)
+                    res.json({tasks: items})
                 } else {
                     res.json({dataExists: 'false'})
                 }
