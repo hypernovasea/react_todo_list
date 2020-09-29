@@ -8,10 +8,10 @@ class App extends Component {
     state = {
         items: [],
         currentItem: {
-            text: '',
-            key:''
-        },
-        data: null
+            task: '',
+            key:'',
+            is_done: false
+        }
     }
 
     componentDidMount() {
@@ -30,46 +30,83 @@ class App extends Component {
         return body;
     }
 
-    addItem = (e) => {
+
+    addItem = async (e) => {
         e.preventDefault();
         const newItem = this.state.currentItem;
-        if(newItem.text !== "") {
-            const items = [...this.state.items, newItem];
+            if(newItem.task !== "") {
 
-            this.setState({
-                items: items, 
-                currentItem: {
-                    text:'',
-                    key:''
+                const response = await fetch('/api/todos/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        task: newItem.task,
+                        is_done: false
+                    })
+                });
+                const body = await response.json();
+
+                if(body.success) {
+                    newItem.key = body.taskId[0];
+                    newItem.is_done = false;
+
+                    const items = [...this.state.items, newItem];
+
+                    this.setState({
+                        items: items, 
+                        currentItem: {
+                            task:'',
+                            key:'',
+                            is_done: false
+                        }
+                    })
                 }
-            })
-        }
+            }
     }
 
     handleInput = (e) => {
         this.setState({
             currentItem: {
-                text: e.target.value,
-                key: Date.now()
+                task: e.target.value,
+                key: Date.now(),
+                is_done: false
             }
         })
     }
 
-    deleteItem = (key) => {
-        const filteredItems = this.state.items.filter(item => 
-            item.key !== key);
-        this.setState({
-            items: filteredItems
-        })
+    deleteItem = async (key) => {
+        console.log("id: " + key);
+        const apiRoute = '/api/todos/' + key;
+        console.log("route: " + apiRoute);
+
+        const response = await fetch(apiRoute, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        const body = await response.json();
+        if(body.success) {
+            const filteredItems = this.state.items.filter(item => 
+                item.id !== key);
+            this.setState({
+                items: filteredItems
+            })
+        }
     }
 
-    setUpdate = (text, key) => {
-        console.log("items" + this.state.items);
+    setUpdate = (task, key) => {
+        console.log("items" + JSON.stringify(this.state.items));
         const items = this.state.items;
         items.map(item => {
             if(item.key === key) {
-            console.log(item.key + " " + key);
-            item.text = text;
+                console.log(item.key + ", " + key);
+                item.task = task;
             }
         })
         this.setState({

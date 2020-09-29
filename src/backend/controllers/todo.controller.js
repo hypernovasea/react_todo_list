@@ -1,22 +1,29 @@
+// const { returning } = require('../db/knex');
 const knex = require('../db/knex');
 
 const todoController = {
     
     createTask(req, res) {
+        // console.log("reqBody: " + JSON.stringify(req));
         console.log("req: " + req.body.task);
-        console.log("req: " + req.body.isdone);
+        console.log("req: " + req.body.is_done);
 
         knex('todo')
             .insert({ 
                 task: req.body.task,
-                is_done: req.body.isdone 
+                is_done: req.body.is_done 
             })
-            .then(() => {
-                res.json({success: true, message: 'Task has been created!'})
+            .returning('id')
+            .then((taskId) => {
+                res.json({
+                    success: true, 
+                    taskId: taskId,
+                    message: 'Task has been created!'
+                })
             })
             .catch((err) => {
                 console.log("error: " + err);
-                res.status(400).json({dbError: 'db error'})
+                res.status(400).json({success: false, dbError: 'db error'})
             });
     },
 
@@ -29,7 +36,7 @@ const todoController = {
                     res.json({dataExists: 'false'})
                 }
             })
-            .catch(err => res.status(400).json({dbError: 'db error'}))
+            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
     },
 
 
@@ -37,9 +44,11 @@ const todoController = {
         knex('todo')
             .where({id: req.params.id})
             .then(item => {
-                res.json(item)
+                res.json({
+                    success: true,
+                    task: item})
             })
-            .catch(err => res.status(400).json({dbError: 'db error'}))
+            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
     },
 
 
@@ -57,7 +66,7 @@ const todoController = {
             .then( () => {
                 res.json({'message': 'Task updated!'})
             })
-            .catch(err => res.status(400).json({dbError: 'db error'}))
+            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
     },
 
 
@@ -66,9 +75,12 @@ const todoController = {
             .where('id', '=', req.params.id)
             .del()
             .then( () => {
-                res.json({'message': 'Task has been deleted!'})
+                res.json({
+                    success: true, 
+                    'message': 'Task has been deleted!'
+                })
             })
-            .catch(err => res.status(400).json({dbError: 'db error'}))
+            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
     }
 
 };

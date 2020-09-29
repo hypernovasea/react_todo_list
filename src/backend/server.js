@@ -10,7 +10,7 @@ const morgan = require('morgan'); // logs requests
 const app = express();
 
 // App middleware
-const whitelist = ['http://localhost:8081']
+const whitelist = ['http://localhost:8081/', 'http://localhost:8080/']
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1 || !origin) {
