@@ -4,7 +4,6 @@ const knex = require('../db/knex');
 const todoController = {
     
     createTask(req, res) {
-        // console.log("reqBody: " + JSON.stringify(req));
         console.log("req: " + req.body.task);
         console.log("req: " + req.body.is_done);
 
@@ -23,20 +22,32 @@ const todoController = {
             })
             .catch((err) => {
                 console.log("error: " + err);
-                res.status(400).json({success: false, dbError: 'db error'})
+                res.status(400).json({
+                    success: false, 
+                    dbError: 'db error'
+                })
             });
     },
+
 
     findAllTasks(req, res) { 
         knex.select('*').from('todo')
             .then(items => {
                 if(items.length){
-                    res.json({tasks: items})
+                    res.json({
+                        dataExists: true,
+                        tasks: items
+                    })
                 } else {
-                    res.json({dataExists: 'false'})
+                    res.json({
+                        dataExists: false
+                    })
                 }
             })
-            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
+            .catch(err => res.status(400).json({
+                success: false, 
+                dbError: 'db error: unable to find tasks'
+            }))
     },
 
 
@@ -46,9 +57,13 @@ const todoController = {
             .then(item => {
                 res.json({
                     success: true,
-                    task: item})
+                    task: item
+                })
             })
-            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
+            .catch(err => res.status(400).json({
+                success: false, 
+                dbError: 'db error: unable to find task'
+            }))
     },
 
 
@@ -56,6 +71,8 @@ const todoController = {
         let taskId = req.params.id; 
         let task = req.body.task;
         let isDone = req.body.is_done;
+
+        console.log("id: " + taskId + ", task: " + task + ", isDone: " + isDone);
         
         knex('todo')
             .where('id', '=', taskId)
@@ -64,9 +81,15 @@ const todoController = {
                 is_done: isDone 
             })
             .then( () => {
-                res.json({'message': 'Task updated!'})
+                res.json({
+                    success: true,
+                    message: 'Task updated!'
+                })
             })
-            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
+            .catch(err => res.status(400).json({
+                success: false, 
+                dbError: 'db error: unable to update task'
+            }))
     },
 
 
@@ -77,10 +100,13 @@ const todoController = {
             .then( () => {
                 res.json({
                     success: true, 
-                    'message': 'Task has been deleted!'
+                    message: 'Task has been deleted!'
                 })
             })
-            .catch(err => res.status(400).json({success: false, dbError: 'db error'}))
+            .catch(err => res.status(400).json({
+                success: false, 
+                dbError: 'db error: unable to delete task'
+            }))
     }
 
 };
