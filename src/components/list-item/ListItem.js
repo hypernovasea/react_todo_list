@@ -9,10 +9,7 @@ function ListItems(props) {
     return (
         <div className="list" key={item.id}>
             <p>
-                <input 
-                    type="text" 
-                    id={item.id} 
-                    value={item.task} 
+                <input type="text" id={item.id} value={item.task} 
                     onChange={(e) => {
                         props.startUpdate(e, item.id)
                     }}
@@ -20,9 +17,14 @@ function ListItems(props) {
                         props.finalizeUpdate(e, item.id, item.task)
                     }}
                 />
+
+                <div id="is-done">
+                    <input type="checkbox" name="done"/>
+                    <label for="done">Done ?</label>
+                </div>
+            
                 <span>
-                    <FontAwesomeIcon 
-                        className="faicons" 
+                    <FontAwesomeIcon className="faicons" 
                         onClick={() => {
                             props.deleteItem(item.id)
                         }} 

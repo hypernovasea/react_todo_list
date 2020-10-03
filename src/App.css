@@ -13,7 +13,6 @@ body {
     background-color: #6b7773;
     border: 0;
     width: 300px;
-    height: 50;
     padding: 10px 20px;
     margin: 20px;
     border-radius: 10px;
@@ -21,9 +20,10 @@ body {
 }
 
 #todo-form button {
-  height: 50px;
+  height: 40px;
   width: 80px;
   border-radius: 5px;
   border: 0;
   background-color: brown;
+  margin: auto;
 }

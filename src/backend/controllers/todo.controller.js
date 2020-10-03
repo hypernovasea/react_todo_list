@@ -1,12 +1,8 @@
-// const { returning } = require('../db/knex');
 const knex = require('../db/knex');
 
 const todoController = {
     
     createTask(req, res) {
-        console.log("req: " + req.body.task);
-        console.log("req: " + req.body.is_done);
-
         knex('todo')
             .insert({ 
                 task: req.body.task,
@@ -71,8 +67,6 @@ const todoController = {
         let taskId = req.params.id; 
         let task = req.body.task;
         let isDone = req.body.is_done;
-
-        console.log("id: " + taskId + ", task: " + task + ", isDone: " + isDone);
         
         knex('todo')
             .where('id', '=', taskId)

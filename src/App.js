@@ -112,12 +112,10 @@ class App extends Component {
         tasks[taskIndex] = foundTask;
 
         this.setState({items: tasks})
-
     }
 
     finalizeUpdate = async(event, key, updatedTask) => {
         if(event.keyCode === 13 && updatedTask !== "") {
-
             const apiRoute = '/api/todos/' + key;
 
             const response = await fetch(apiRoute, {
@@ -134,22 +132,8 @@ class App extends Component {
                 console.log("response body:" + body.message);
             }
         }
-
     }
 
-    // setUpdate = (event, task, key) => {
-    //     console.log("items" + JSON.stringify(this.state.items));
-    //     const items = this.state.items;
-    //     items.map(item => {
-    //         if(item.key === key) {
-    //             console.log(item.key + ", " + key);
-    //             item.task = task;
-    //         }
-    //     })
-    //     this.setState({
-    //         items: items
-    //     })
-    // }
 
     render() {
         let tasks = (
@@ -157,10 +141,12 @@ class App extends Component {
                 {this.state.items.map(item => {
                     
                     return <ListItem
+                        key={item.id}
                         item={item} 
                         deleteItem={this.deleteItem} 
                         startUpdate={this.startUpdate}
                         finalizeUpdate={this.finalizeUpdate}
+                        // checked={this.isDone}
                     />
                 })}
             </div>
@@ -169,12 +155,10 @@ class App extends Component {
         return (
             <div className="App">
                 <header>
-                    <form id="to-do-form" onSubmit={this.addItem}>
+                    <form id="todo-form" onSubmit={this.addItem}>
                         <input type="text" placeholder="Enter task" value={this.state.currentItem.text} onChange={this.handleInput}></input>
                         <button type="submit">Add</button>
                     </form>
-                    {/* <p className="App-intro">{this.state.data}</p> */}
-                    <p>{this.state.items.text}</p>
                     <div>
                         <FlipMove duration={300} easing="ease-in-out">
                             {tasks}
