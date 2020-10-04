@@ -5,7 +5,7 @@ This is a todo list using a PERN (Postgres, Express, React, Node) stack. This ap
 
 This project was initally bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## React (Frontend) Available Scripts
+## React (Frontend)
 
 In the project directory, you can run:
 
@@ -50,7 +50,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 To start the backend, enter `node src/backend/server.js` and the server will start listening on port 8080.
 
 ## Usage
-* Please ensure that a Postgres database has been created on the machine.
+* NOTE: Please ensure that a Postgres database has been created on the machine.
 * Create a file named `config_values.js` in the directory `src/backend/db` with the following configuration values:
 ```javascript
 module.exports = {
