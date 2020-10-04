@@ -1,6 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Todo List
 
-## Available Scripts
+## Overview
+This is a todo list using a PERN (Postgres, Express, React, Node) stack. This application allows for the creation, deletion, and update of tasks from a React UI.
+
+This project was initally bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## React (Frontend) Available Scripts
 
 In the project directory, you can run:
 
@@ -37,32 +42,30 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Express (Backend)
+To start the backend, enter `node src/backend/server.js` and the server will start listening on port 8080.
+
+## Usage
+* Please ensure that a Postgres database has been created on the machine.
+* Create a file named `config_values.js` in the directory `src/backend/db` with the following configuration values:
+```javascript
+module.exports = {
+    HOST: "localhost",
+    USER: "<db-user-name>",
+    PASSWORD: "<db-password>",
+    DB: "testdb",
+    dialect: "postgres",
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
+};
+```
+* Bring up the Express server in a terminal using the command: `node src/backend/server.js`. The Express port will be on 8080.
+* Bring up the React frontened in a separate terminal using the `npm start` script.
