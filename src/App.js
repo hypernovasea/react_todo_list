@@ -20,6 +20,8 @@ class App extends Component {
         'Accept': 'application/json'
     }
 
+
+
     componentDidMount() {
         this.fetchTodos()
             .then(res => this.setState({ items: res.tasks }))
@@ -69,16 +71,6 @@ class App extends Component {
             }
     }
 
-    handleInput = (e) => {
-        this.setState({
-            currentItem: {
-                task: e.target.value,
-                key: Date.now(),
-                is_done: false
-            }
-        })
-    }
-
     deleteItem = async (key) => {
         const apiRoute = '/api/todos/' + key;
 
@@ -114,16 +106,36 @@ class App extends Component {
         this.setState({items: tasks})
     }
 
-    finalizeUpdate = async(event, key, updatedTask) => {
-        if(event.keyCode === 13 && updatedTask !== "") {
-            const apiRoute = '/api/todos/' + key;
+    isTaskDone = (event, key) =>  {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+
+        const taskIndex = this.state.items.findIndex(t => {
+            return t.id === key;    
+        })
+        
+        const foundTask = {
+            ...this.state.items[taskIndex]
+        };
+
+        foundTask.is_done = value;
+
+        const tasks = [...this.state.items];
+        tasks[taskIndex] = foundTask;
+
+        this.setState({items: tasks})
+    }
+
+    finalizeUpdate = async(event, updatedTask) => {
+        if(event.keyCode === 13 && updatedTask.task !== "") {
+            const apiRoute = '/api/todos/' + updatedTask.id;
 
             const response = await fetch(apiRoute, {
                 method: 'PUT',
                 headers: this.headers,
                 body: JSON.stringify({
-                    task: updatedTask,
-                    is_done: false
+                    task: updatedTask.task,
+                    is_done: updatedTask.is_done
                 })
             });
 
@@ -134,19 +146,28 @@ class App extends Component {
         }
     }
 
+    handleInput = (e) => {
+        this.setState({
+            currentItem: {
+                task: e.target.value,
+                key: Date.now(),
+                is_done: false
+            }
+        })
+    }
+
 
     render() {
         let tasks = (
             <div>
                 {this.state.items.map(item => {
-                    
                     return <ListItem
                         key={item.id}
                         item={item} 
                         deleteItem={this.deleteItem} 
                         startUpdate={this.startUpdate}
                         finalizeUpdate={this.finalizeUpdate}
-                        // checked={this.isDone}
+                        isTaskDone={this.isTaskDone}
                     />
                 })}
             </div>

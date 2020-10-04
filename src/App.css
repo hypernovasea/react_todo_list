@@ -16,7 +16,7 @@ body {
     padding: 10px 20px;
     margin: 20px;
     border-radius: 10px;
-    color: #000;
+    color: #fff;
 }
 
 #todo-form button {
@@ -25,5 +25,5 @@ body {
   border-radius: 5px;
   border: 0;
   background-color: brown;
-  margin: auto;
+  margin-left: 20px;
 }

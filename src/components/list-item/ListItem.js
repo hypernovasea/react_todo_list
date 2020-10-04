@@ -8,30 +8,28 @@ function ListItems(props) {
 
     return (
         <div className="list" key={item.id}>
-            <p>
+            {/* <p> */}
                 <input type="text" id={item.id} value={item.task} 
-                    onChange={(e) => {
-                        props.startUpdate(e, item.id)
-                    }}
-                    onKeyDown={(e) => {
-                        props.finalizeUpdate(e, item.id, item.task)
-                    }}
+                    onChange={(e) => {props.startUpdate(e, item.id)}}
+                    onKeyDown={(e) => {props.finalizeUpdate(e, item)}}
                 />
 
                 <div id="is-done">
-                    <input type="checkbox" name="done"/>
-                    <label for="done">Done ?</label>
+                    <label>
+                        Done ?
+                        <input type="checkbox" name="done" 
+                            checked={item.is_done} 
+                            onChange={(e) => {props.isTaskDone(e, item.id)}}/>
+                    </label>
                 </div>
             
                 <span>
                     <FontAwesomeIcon className="faicons" 
-                        onClick={() => {
-                            props.deleteItem(item.id)
-                        }} 
+                        onClick={() => {props.deleteItem(item.id)}} 
                         icon={faTrash}
                     />
                 </span>
-            </p>
+            {/* </p> */}
         </div>
     );
 }
